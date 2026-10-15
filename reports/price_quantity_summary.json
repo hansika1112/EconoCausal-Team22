@@ -1,0 +1,42 @@
+{
+  "dataset_rows": 1067371,
+  "note": "Descriptive statistics only; no rows were deleted.",
+  "columns": {
+    "Quantity": {
+      "non_missing_count": 1067371,
+      "minimum": -80995.0,
+      "p01": -3.0,
+      "p05": 1.0,
+      "p25": 1.0,
+      "median": 3.0,
+      "mean": 9.9388984711033,
+      "p75": 10.0,
+      "p95": 30.0,
+      "p99": 100.0,
+      "maximum": 80995.0,
+      "standard_deviation": 172.7057940767534,
+      "skewness": 3.996144614707427,
+      "zero_count": 0,
+      "negative_count": 22950,
+      "positive_count": 1044421
+    },
+    "Price": {
+      "non_missing_count": 1067371,
+      "minimum": -53594.36,
+      "p01": 0.21,
+      "p05": 0.42,
+      "p25": 1.25,
+      "median": 2.1,
+      "mean": 4.64938772741624,
+      "p75": 4.15,
+      "p95": 9.95,
+      "p99": 18.0,
+      "maximum": 38970.0,
+      "standard_deviation": 123.5530587214632,
+      "skewness": -69.16473385725457,
+      "zero_count": 6202,
+      "negative_count": 5,
+      "positive_count": 1061164
+    }
+  }
+}
