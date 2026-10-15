@@ -48,8 +48,19 @@ The combined-dataset scan identified 34,335 exact duplicate rows, approximately 
 The separate worksheet duplicate counts were:
 - Year 2009-2010: 6,865
 - Year 2010-2011: 5,268
+- Sum of worksheet-level duplicate counts: 12,133
 
-The sum of the separate worksheet counts is 12,133, which differs from the combined count of 34,335. The combined count was verified by concatenating both worksheets before checking duplicates. The difference still requires further investigation.
+A cross-sheet comparison produced the following results:
+
+| Check | Result |
+|---|---:|
+| Combined exact duplicate rows | 34,335 |
+| Unique exact rows in Sheet 2 also found in Sheet 1 | 22,202 |
+| Total matching rows returned by the cross-sheet merge | 22,523 |
+
+The cross-sheet merge returned 22,523 matching rows, representing 22,202 unique exact rows. Repeated occurrences account for the difference between these two match counts. This supports the conclusion that exact records overlap across the worksheets and helps explain why the combined duplicate count exceeds the sum of worksheet-level counts.
+
+The counts describe duplicate rows under exact matching across all eight columns. They do not establish that every repeated transaction is erroneous or should be removed.
 
 **Proposed handling:** Preserve the raw data. Investigate repeated transactions and compare analysis results under clearly documented duplicate-handling strategies before removing any records.
 
@@ -94,7 +105,7 @@ Observed associations between price and quantity do not, by themselves, establis
 
 ## 8. Proposed Next Steps
 
-1. Investigate the duplicate-count discrepancy.
+1. Review the verified cross-sheet duplicate overlap and decide whether further record-level investigation is needed.
 2. Examine missing values and unusual transactions.
 3. Define transparent preprocessing rules.
 4. Conduct price and quantity distribution analysis.
