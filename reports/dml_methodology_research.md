@@ -117,6 +117,34 @@ Cleaning decisions must be justified by the business question. Records should no
 11. Evaluate relevant diagnostics and robustness.
 12. Document findings, limitations, and reproducibility details.
 
+### 6.1 EDA Findings and DML Readiness
+
+The dataset inspection and cleaning notebook was executed locally, and its validation and reload checks passed. The documented cleaning workflow retained 1,003,340 rows from the original 1,067,371 transaction rows (94.0%).
+
+Key findings relevant to the proposed DML analysis include:
+
+- Customer ID is missing for 22.6% of the cleaned transaction rows.
+- The cleaning workflow removes duplicate records, cancellation invoices, non-positive quantities, non-positive prices, and identified non-product stock codes.
+- Quantity and price outliers are flagged rather than automatically removed in the current configuration.
+- The cleaned transaction data contains 196,242 product-week rows across 4,724 products and 104 weeks in the reported aggregation.
+- The dataset does not provide explicit competitor-price or promotion indicators, which limits the ability to account for all potential price–quantity confounding.
+
+These findings are descriptive and do not establish a causal price effect.
+
+### 6.2 Proposed Analysis Readiness Checks
+
+Before fitting a DML estimator:
+
+1. Confirm the final treatment, outcome, analysis unit, and target estimand with the team and mentor.
+2. Verify that product-week aggregation preserves meaningful price and quantity variation.
+3. Inspect the distribution of price and quantity and document the treatment of returns and cancellations.
+4. Select candidate controls based on causal relevance and timing, not prediction accuracy alone.
+5. Assess treatment overlap and the availability of comparable observations.
+6. Define a reproducible data-splitting strategy that accounts for the repeated product and time structure where appropriate.
+7. Establish a baseline and sensitivity checks before interpreting any estimated treatment effect.
+
+No DML model has been fitted as part of this update, and no causal estimate is claimed.
+
 ## 7. Assumptions and Risks
 
 The following issues must be assessed before making causal claims:
@@ -178,7 +206,3 @@ The following items remain pending:
 1. UCI Machine Learning Repository. *Online Retail II*. https://archive.ics.uci.edu/dataset/502/online+retail+ii
 2. EconML Documentation. *Double Machine Learning*. https://econml.azurewebsites.net/spec/estimation/dml.html
 3. DoubleML Documentation. *Basics of Double Machine Learning*. https://docs.doubleml.org/stable/guide/basics.html
-
-## Status
-
-This document is an evolving research draft based on the dataset details reported by the collection team and established DML concepts. Dataset details, cleaning decisions, and EDA findings still require verification. No dataset-specific model has been trained, and no empirical results are claimed.
