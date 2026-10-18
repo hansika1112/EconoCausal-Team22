@@ -1,0 +1,25 @@
+{
+  "name": "econocausal-team22",
+  "version": "1.0.0",
+  "description": "**Team Group:** 22\r **Organization:** Infotact Solutions Internship\r **Assignment ID:** ITS/DSML/1192\r **Domain:** Data Science & Machine Learning",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": ".venv\\Scripts\\python.exe -m pytest",
+    "start": ".venv\\Scripts\\python.exe -m streamlit run src\\data\\retail_eda_app.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hansika1112/EconoCausal-Team22.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/hansika1112/EconoCausal-Team22/issues"
+  },
+  "homepage": "https://github.com/hansika1112/EconoCausal-Team22#readme"
+}

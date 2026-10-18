@@ -1,9 +1,11 @@
 numpy
 pandas
+openpyxl
 matplotlib
-seaborn
 scikit-learn
 jupyter
 statsmodels
 econml
 pytest
+streamlit
+plotly
