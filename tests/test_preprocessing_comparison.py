@@ -33,3 +33,19 @@ def test_summarize_handles_single_row():
     assert result["quantity_median"] == 5.0
     assert result["price_mean"] == 12.5
     assert result["price_median"] == 12.5
+
+
+def test_summarize_preserves_zero_and_negative_values():
+    df = pd.DataFrame({
+        "Invoice": ["10001", "10002", "10003"],
+        "Quantity": [2, 0, -2],
+        "Price": [10.0, 0.0, -10.0],
+    })
+
+    result = summarize(df)
+
+    assert result["rows"] == 3
+    assert result["quantity_mean"] == 0.0
+    assert result["quantity_median"] == 0.0
+    assert result["price_mean"] == 0.0
+    assert result["price_median"] == 0.0
