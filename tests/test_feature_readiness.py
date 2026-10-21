@@ -12,9 +12,7 @@ def test_valid_data_passes_readiness_checks():
     })
 
     result = validate_dml_features(
-        data,
-        treatment="Price",
-        outcome="Quantity",
+        data, treatment="Price", outcome="Quantity",
         confounders=["Country"],
     )
 
@@ -27,9 +25,7 @@ def test_missing_required_column_raises_error():
     data = pd.DataFrame({"Price": [10.0], "Quantity": [2]})
 
     with pytest.raises(ValueError, match="Missing required columns"):
-        validate_dml_features(
-            data, "Price", "Quantity", ["Country"]
-        )
+        validate_dml_features(data, "Price", "Quantity", ["Country"])
 
 
 def test_missing_values_are_reported():
@@ -60,3 +56,16 @@ def test_treatment_and_outcome_must_differ():
 
     with pytest.raises(ValueError, match="must be different"):
         validate_dml_features(data, "Price", "Price")
+
+
+def test_nonpositive_treatment_and_outcome_are_flagged():
+    data = pd.DataFrame({
+        "Price": [10.0, 0.0, -5.0],
+        "Quantity": [3, 0, 2],
+    })
+
+    result = validate_dml_features(data, "Price", "Quantity")
+
+    assert result["ready"] is False
+    assert result["invalid_nonpositive_counts"]["Price"] == 2
+    assert result["invalid_nonpositive_counts"]["Quantity"] == 1

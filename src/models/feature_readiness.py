@@ -53,16 +53,26 @@ def validate_dml_features(
         for column in required
     }
 
+    invalid_counts = {
+        treatment: int((selected[treatment] <= 0).sum()),
+        outcome: int((selected[outcome] <= 0).sum()),
+    }
+
     return {
-        "ready": all(count == 0 for count in missing_counts.values()),
+        "ready": (
+            all(count == 0 for count in missing_counts.values())
+            and all(count == 0 for count in invalid_counts.values())
+        ),
         "row_count": int(len(data)),
         "treatment": treatment,
         "outcome": outcome,
         "confounders": list(confounders),
         "missing_counts": missing_counts,
+        "invalid_nonpositive_counts": invalid_counts,
         "complete_case_count": int(selected.dropna().shape[0]),
         "note": (
-            "Readiness checks only. Passing these checks does not establish "
-            "causal identification or validate the chosen confounders."
+            "Readiness checks only. Non-positive treatment and outcome "
+            "values are flagged, not removed. Passing these checks does not "
+            "establish causal identification or validate confounder selection."
         ),
     }
