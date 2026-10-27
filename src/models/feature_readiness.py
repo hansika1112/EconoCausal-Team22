@@ -1,5 +1,6 @@
 from collections.abc import Sequence
 
+import numpy as np
 import pandas as pd
 
 
@@ -26,11 +27,11 @@ def validate_dml_features(
     if isinstance(confounders, str):
         raise TypeError("confounders must be a sequence of column names")
 
-    if treatment in confounders or outcome in confounders:
-        raise ValueError("Confounders must differ from treatment and outcome")
-
     if len(set(confounders)) != len(confounders):
         raise ValueError("Confounder names must be unique")
+
+    if treatment in confounders or outcome in confounders:
+        raise ValueError("Confounders must differ from treatment and outcome")
 
     required = [treatment, outcome, *confounders]
     missing = [column for column in required if column not in data.columns]
@@ -53,26 +54,40 @@ def validate_dml_features(
         for column in required
     }
 
+    non_finite_counts = {
+        column: (
+            int((~np.isfinite(selected[column].dropna())).sum())
+            if pd.api.types.is_numeric_dtype(selected[column])
+            else 0
+        )
+        for column in required
+    }
+
     invalid_counts = {
         treatment: int((selected[treatment] <= 0).sum()),
         outcome: int((selected[outcome] <= 0).sum()),
     }
 
+    ready = (
+        all(count == 0 for count in missing_counts.values())
+        and all(count == 0 for count in non_finite_counts.values())
+        and all(count == 0 for count in invalid_counts.values())
+    )
+
     return {
-        "ready": (
-            all(count == 0 for count in missing_counts.values())
-            and all(count == 0 for count in invalid_counts.values())
-        ),
+        "ready": ready,
         "row_count": int(len(data)),
         "treatment": treatment,
         "outcome": outcome,
         "confounders": list(confounders),
         "missing_counts": missing_counts,
+        "non_finite_counts": non_finite_counts,
         "invalid_nonpositive_counts": invalid_counts,
         "complete_case_count": int(selected.dropna().shape[0]),
         "note": (
-            "Readiness checks only. Non-positive treatment and outcome "
-            "values are flagged, not removed. Passing these checks does not "
-            "establish causal identification or validate confounder selection."
+            "Readiness checks only. Non-finite and non-positive treatment "
+            "and outcome values are flagged, not removed. Passing these "
+            "checks does not establish causal identification or validate "
+            "confounder selection."
         ),
     }

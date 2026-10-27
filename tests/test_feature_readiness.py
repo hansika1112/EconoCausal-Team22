@@ -82,3 +82,36 @@ def test_string_confounders_argument_is_rejected():
     })
     with pytest.raises(TypeError, match="confounders must be a sequence"):
         validate_dml_features(data, "Price", "Quantity", "Country")
+
+
+def test_infinite_treatment_is_flagged():
+    data = pd.DataFrame({
+        "Price": [10.0, float("inf")],
+        "Quantity": [5, 3],
+    })
+    result = validate_dml_features(data, "Price", "Quantity")
+    assert result["ready"] is False
+    assert result["non_finite_counts"]["Price"] == 1
+
+
+def test_negative_infinity_outcome_is_flagged():
+    data = pd.DataFrame({
+        "Price": [10.0, 12.0],
+        "Quantity": [5, float("-inf")],
+    })
+    result = validate_dml_features(data, "Price", "Quantity")
+    assert result["ready"] is False
+    assert result["non_finite_counts"]["Quantity"] == 1
+
+
+def test_infinite_confounder_is_flagged():
+    data = pd.DataFrame({
+        "Price": [10.0, 12.0],
+        "Quantity": [5, 3],
+        "Confounder": [1.0, float("inf")],
+    })
+    result = validate_dml_features(
+        data, "Price", "Quantity", ["Confounder"]
+    )
+    assert result["ready"] is False
+    assert result["non_finite_counts"]["Confounder"] == 1
