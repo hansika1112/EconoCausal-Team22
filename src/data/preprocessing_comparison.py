@@ -11,6 +11,19 @@ COLUMNS = ["Invoice", "Quantity", "Price"]
 
 
 def summarize(df):
+    required_columns = ["Invoice", "Quantity", "Price"]
+    missing_columns = [
+        column for column in required_columns
+        if column not in df.columns
+    ]
+
+    if missing_columns:
+        raise ValueError(f"Missing required columns: {missing_columns}")
+
+    for column in ["Quantity", "Price"]:
+        if not pd.api.types.is_numeric_dtype(df[column]):
+            raise TypeError(f"{column} must contain numeric values")
+
     return {
         "rows": int(len(df)),
         "quantity_mean": float(df["Quantity"].mean()),
@@ -18,7 +31,6 @@ def summarize(df):
         "price_mean": float(df["Price"].mean()),
         "price_median": float(df["Price"].median()),
     }
-
 
 def main():
     if not DATA_FILE.exists():

@@ -74,7 +74,7 @@ def test_summarize_rejects_missing_required_columns():
         "Quantity": [5],
     })
 
-    with pytest.raises(KeyError):
+    with pytest.raises(ValueError, match="Missing required columns"):
         summarize(df)
 
 
@@ -92,3 +92,25 @@ def test_summarize_handles_fractional_values():
     assert result["quantity_median"] == 2.0
     assert result["price_mean"] == 15.5
     assert result["price_median"] == 15.5
+
+def test_summarize_rejects_non_numeric_quantity():
+    df = pd.DataFrame({
+        "Invoice": ["10001", "10002"],
+        "Quantity": [5, "invalid"],
+        "Price": [10.0, 20.0],
+    })
+
+    with pytest.raises(TypeError, match="Quantity must contain numeric"):
+        summarize(df)
+
+
+def test_summarize_rejects_non_numeric_price():
+    df = pd.DataFrame({
+        "Invoice": ["10001", "10002"],
+        "Quantity": [5, 3],
+        "Price": [10.0, "invalid"],
+    })
+
+    with pytest.raises(TypeError, match="Price must contain numeric"):
+        summarize(df)
+
