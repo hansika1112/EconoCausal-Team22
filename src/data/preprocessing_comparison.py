@@ -24,6 +24,9 @@ def summarize(df):
         if not pd.api.types.is_numeric_dtype(df[column]):
             raise TypeError(f"{column} must contain numeric values")
 
+        if df[column].isna().any():
+            raise ValueError(f"{column} contains missing values")
+
     return {
         "rows": int(len(df)),
         "quantity_mean": float(df["Quantity"].mean()),

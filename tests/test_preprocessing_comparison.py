@@ -114,3 +114,24 @@ def test_summarize_rejects_non_numeric_price():
     with pytest.raises(TypeError, match="Price must contain numeric"):
         summarize(df)
 
+def test_summarize_rejects_missing_quantity_values():
+    df = pd.DataFrame({
+        "Invoice": ["10001", "10002"],
+        "Quantity": [5.0, float("nan")],
+        "Price": [10.0, 20.0],
+    })
+
+    with pytest.raises(ValueError, match="Quantity contains missing values"):
+        summarize(df)
+
+
+def test_summarize_rejects_missing_price_values():
+    df = pd.DataFrame({
+        "Invoice": ["10001", "10002"],
+        "Quantity": [5.0, 3.0],
+        "Price": [10.0, float("nan")],
+    })
+
+    with pytest.raises(ValueError, match="Price contains missing values"):
+        summarize(df)
+
