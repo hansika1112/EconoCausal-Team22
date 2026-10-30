@@ -33,6 +33,10 @@ def summarize(df):
         "quantity_median": float(df["Quantity"].median()),
         "price_mean": float(df["Price"].mean()),
         "price_median": float(df["Price"].median()),
+        "quantity_min": float(df["Quantity"].min()),
+        "quantity_max": float(df["Quantity"].max()),
+        "price_min": float(df["Price"].min()),
+        "price_max": float(df["Price"].max()),
     }
 
 def main():
