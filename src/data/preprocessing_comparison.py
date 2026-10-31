@@ -37,6 +37,8 @@ def summarize(df):
         "quantity_max": float(df["Quantity"].max()),
         "price_min": float(df["Price"].min()),
         "price_max": float(df["Price"].max()),
+        "quantity_std": float(df["Quantity"].std()),
+        "price_std": float(df["Price"].std()),
     }
 
 def main():

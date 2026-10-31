@@ -22,6 +22,8 @@ def test_summarize_returns_correct_row_count_and_statistics():
     assert result["quantity_max"] == 6.0
     assert result["price_min"] == 10.0
     assert result["price_max"] == 30.0
+    assert result["quantity_std"] == pytest.approx(2.0)
+    assert result["price_std"] == pytest.approx(10.0)
 
 
 def test_summarize_handles_single_row():
@@ -138,4 +140,16 @@ def test_summarize_rejects_missing_price_values():
 
     with pytest.raises(ValueError, match="Price contains missing values"):
         summarize(df)
+
+def test_summarize_returns_zero_std_for_single_row():
+    df = pd.DataFrame({
+        "Invoice": ["10001"],
+        "Quantity": [5],
+        "Price": [12.5],
+    })
+
+    result = summarize(df)
+
+    assert pd.isna(result["quantity_std"])
+    assert pd.isna(result["price_std"])
 
