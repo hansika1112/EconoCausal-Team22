@@ -24,6 +24,10 @@ def test_summarize_returns_correct_row_count_and_statistics():
     assert result["price_max"] == 30.0
     assert result["quantity_std"] == pytest.approx(2.0)
     assert result["price_std"] == pytest.approx(10.0)
+    assert result["quantity_variance"] == pytest.approx(4.0)
+    assert result["price_variance"] == pytest.approx(100.0)
+    assert result["quantity_iqr"] == pytest.approx(2.0)
+    assert result["price_iqr"] == pytest.approx(10.0)
 
 
 def test_summarize_handles_single_row():
@@ -152,4 +156,8 @@ def test_summarize_returns_zero_std_for_single_row():
 
     assert pd.isna(result["quantity_std"])
     assert pd.isna(result["price_std"])
+    assert pd.isna(result["quantity_variance"])
+    assert pd.isna(result["price_variance"])
+    assert result["quantity_iqr"] == 0.0
+    assert result["price_iqr"] == 0.0
 

@@ -39,6 +39,16 @@ def summarize(df):
         "price_max": float(df["Price"].max()),
         "quantity_std": float(df["Quantity"].std()),
         "price_std": float(df["Price"].std()),
+        "quantity_variance": float(df["Quantity"].var()),
+        "price_variance": float(df["Price"].var()),
+        "quantity_iqr": float(
+            df["Quantity"].quantile(0.75)
+            - df["Quantity"].quantile(0.25)
+        ),
+        "price_iqr": float(
+            df["Price"].quantile(0.75)
+            - df["Price"].quantile(0.25)
+        ),
     }
 
 def main():
