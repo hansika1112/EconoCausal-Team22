@@ -27,6 +27,28 @@ def summarize(df):
         if df[column].isna().any():
             raise ValueError(f"{column} contains missing values")
 
+    quantity_q1 = df["Quantity"].quantile(0.25)
+    quantity_q3 = df["Quantity"].quantile(0.75)
+    quantity_iqr = quantity_q3 - quantity_q1
+
+    price_q1 = df["Price"].quantile(0.25)
+    price_q3 = df["Price"].quantile(0.75)
+    price_iqr = price_q3 - price_q1
+
+    quantity_lower_bound = quantity_q1 - 1.5 * quantity_iqr
+    quantity_upper_bound = quantity_q3 + 1.5 * quantity_iqr
+    price_lower_bound = price_q1 - 1.5 * price_iqr
+    price_upper_bound = price_q3 + 1.5 * price_iqr
+
+    quantity_outliers = (
+        (df["Quantity"] < quantity_lower_bound)
+        | (df["Quantity"] > quantity_upper_bound)
+    )
+    price_outliers = (
+        (df["Price"] < price_lower_bound)
+        | (df["Price"] > price_upper_bound)
+    )
+
     return {
         "rows": int(len(df)),
         "quantity_mean": float(df["Quantity"].mean()),
@@ -41,14 +63,14 @@ def summarize(df):
         "price_std": float(df["Price"].std()),
         "quantity_variance": float(df["Quantity"].var()),
         "price_variance": float(df["Price"].var()),
-        "quantity_iqr": float(
-            df["Quantity"].quantile(0.75)
-            - df["Quantity"].quantile(0.25)
-        ),
-        "price_iqr": float(
-            df["Price"].quantile(0.75)
-            - df["Price"].quantile(0.25)
-        ),
+        "quantity_iqr": float(quantity_iqr),
+        "price_iqr": float(price_iqr),
+        "quantity_outlier_lower_bound": float(quantity_lower_bound),
+        "quantity_outlier_upper_bound": float(quantity_upper_bound),
+        "price_outlier_lower_bound": float(price_lower_bound),
+        "price_outlier_upper_bound": float(price_upper_bound),
+        "quantity_outlier_count": int(quantity_outliers.sum()),
+        "price_outlier_count": int(price_outliers.sum()),
     }
 
 def main():

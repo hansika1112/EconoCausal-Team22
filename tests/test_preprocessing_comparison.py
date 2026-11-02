@@ -161,3 +161,60 @@ def test_summarize_returns_zero_std_for_single_row():
     assert result["quantity_iqr"] == 0.0
     assert result["price_iqr"] == 0.0
 
+
+def test_summarize_detects_iqr_outliers():
+    df = pd.DataFrame({
+        "Invoice": ["10001", "10002", "10003", "10004", "10005"],
+        "Quantity": [1, 2, 3, 4, 100],
+        "Price": [10.0, 20.0, 30.0, 40.0, 1000.0],
+    })
+
+    result = summarize(df)
+
+    assert result["quantity_outlier_lower_bound"] == pytest.approx(-1.0)
+    assert result["quantity_outlier_upper_bound"] == pytest.approx(7.0)
+    assert result["price_outlier_lower_bound"] == pytest.approx(-10.0)
+    assert result["price_outlier_upper_bound"] == pytest.approx(70.0)
+    assert result["quantity_outlier_count"] == 1
+    assert result["price_outlier_count"] == 1
+
+
+def test_summarize_returns_zero_outliers_for_regular_values():
+    df = pd.DataFrame({
+        "Invoice": ["10001", "10002", "10003", "10004"],
+        "Quantity": [2, 3, 4, 5],
+        "Price": [10.0, 20.0, 30.0, 40.0],
+    })
+
+    result = summarize(df)
+
+    assert result["quantity_outlier_count"] == 0
+    assert result["price_outlier_count"] == 0
+
+
+def test_summarize_handles_outlier_detection_for_single_row():
+    df = pd.DataFrame({
+        "Invoice": ["10001"],
+        "Quantity": [5],
+        "Price": [12.5],
+    })
+
+    result = summarize(df)
+
+    assert result["quantity_outlier_count"] == 0
+    assert result["price_outlier_count"] == 0
+
+
+def test_summarize_handles_outlier_detection_for_empty_dataframe():
+    df = pd.DataFrame({
+        "Invoice": pd.Series(dtype="string"),
+        "Quantity": pd.Series(dtype="float64"),
+        "Price": pd.Series(dtype="float64"),
+    })
+
+    result = summarize(df)
+
+    assert result["quantity_outlier_count"] == 0
+    assert result["price_outlier_count"] == 0
+    assert pd.isna(result["quantity_outlier_lower_bound"])
+    assert pd.isna(result["price_outlier_upper_bound"])
