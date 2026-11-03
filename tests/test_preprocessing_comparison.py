@@ -177,6 +177,8 @@ def test_summarize_detects_iqr_outliers():
     assert result["price_outlier_upper_bound"] == pytest.approx(70.0)
     assert result["quantity_outlier_count"] == 1
     assert result["price_outlier_count"] == 1
+    assert result["quantity_outlier_percentage"] == pytest.approx(20.0)
+    assert result["price_outlier_percentage"] == pytest.approx(20.0)
 
 
 def test_summarize_returns_zero_outliers_for_regular_values():
@@ -190,6 +192,8 @@ def test_summarize_returns_zero_outliers_for_regular_values():
 
     assert result["quantity_outlier_count"] == 0
     assert result["price_outlier_count"] == 0
+    assert result["quantity_outlier_percentage"] == 0.0
+    assert result["price_outlier_percentage"] == 0.0
 
 
 def test_summarize_handles_outlier_detection_for_single_row():
@@ -218,3 +222,5 @@ def test_summarize_handles_outlier_detection_for_empty_dataframe():
     assert result["price_outlier_count"] == 0
     assert pd.isna(result["quantity_outlier_lower_bound"])
     assert pd.isna(result["price_outlier_upper_bound"])
+    assert result["quantity_outlier_percentage"] == 0.0
+    assert result["price_outlier_percentage"] == 0.0

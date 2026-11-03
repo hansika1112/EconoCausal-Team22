@@ -71,6 +71,14 @@ def summarize(df):
         "price_outlier_upper_bound": float(price_upper_bound),
         "quantity_outlier_count": int(quantity_outliers.sum()),
         "price_outlier_count": int(price_outliers.sum()),
+        "quantity_outlier_percentage": (
+            float(quantity_outliers.sum() / len(df) * 100)
+            if len(df) else 0.0
+        ),
+        "price_outlier_percentage": (
+            float(price_outliers.sum() / len(df) * 100)
+            if len(df) else 0.0
+        ),
     }
 
 def main():
