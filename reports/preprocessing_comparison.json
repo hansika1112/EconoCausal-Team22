@@ -1,0 +1,61 @@
+{
+  "dataset": "online_retail_II.xlsx",
+  "original_rows": 1067371,
+  "note": "Comparison scenarios only. The raw dataset has not been modified.",
+  "scenarios": {
+    "original": {
+      "rows": 1067371,
+      "quantity_mean": 9.9388984711033,
+      "quantity_median": 3.0,
+      "price_mean": 4.64938772741624,
+      "price_median": 2.1,
+      "excluded_rows": 0,
+      "retained_percent": 100.0
+    },
+    "exclude_cancellation_invoices": {
+      "rows": 1047877,
+      "quantity_mean": 10.592353873593943,
+      "quantity_median": 3.0,
+      "price_mean": 3.901109145443597,
+      "price_median": 2.1,
+      "excluded_rows": 19494,
+      "retained_percent": 98.17
+    },
+    "exclude_negative_quantities": {
+      "rows": 1044421,
+      "quantity_mean": 11.176115761747418,
+      "quantity_median": 3.0,
+      "price_mean": 3.9143756377935714,
+      "price_median": 2.1,
+      "excluded_rows": 22950,
+      "retained_percent": 97.85
+    },
+    "exclude_nonpositive_prices": {
+      "rows": 1061164,
+      "quantity_mean": 10.299362775216649,
+      "quantity_median": 3.0,
+      "price_mean": 4.826113369846697,
+      "price_median": 2.1,
+      "excluded_rows": 6207,
+      "retained_percent": 99.42
+    },
+    "positive_quantity_and_price": {
+      "rows": 1041671,
+      "quantity_mean": 10.963448152055687,
+      "quantity_median": 3.0,
+      "price_mean": 4.077038007201891,
+      "price_median": 2.1,
+      "excluded_rows": 25700,
+      "retained_percent": 97.59
+    },
+    "positive_non_cancellation_sales": {
+      "rows": 1041670,
+      "quantity_mean": 10.963457716935306,
+      "quantity_median": 3.0,
+      "price_mean": 4.0766832950934555,
+      "price_median": 2.1,
+      "excluded_rows": 25701,
+      "retained_percent": 97.59
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "outcome_model": {
+    "model": "log_quantity",
+    "fold_scores": [
+      0.10968104677062762,
+      0.16497238258207525,
+      0.14461193111657444
+    ],
+    "mean_r2": 0.13975512015642577,
+    "std_r2": 0.027963805418442837,
+    "min_r2": 0.10968104677062762,
+    "max_r2": 0.16497238258207525
+  },
+  "treatment_model": {
+    "model": "log_price",
+    "fold_scores": [
+      0.5415284956535873,
+      0.5665029369119463,
+      0.5561764780916991
+    ],
+    "mean_r2": 0.5547359702190776,
+    "std_r2": 0.012549381508270428,
+    "min_r2": 0.5415284956535873,
+    "max_r2": 0.5665029369119463
+  },
+  "interpretation": "Nuisance-model R-squared scores are predictive diagnostics. They do not establish causal identification."
+}

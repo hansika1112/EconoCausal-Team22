@@ -1,0 +1,83 @@
+{
+  "dataset": "online_retail_II.xlsx",
+  "inspection_type": "Initial EDA; raw dataset not modified",
+  "total_data_rows": 1067371,
+  "columns": [
+    "Invoice",
+    "StockCode",
+    "Description",
+    "Quantity",
+    "InvoiceDate",
+    "Price",
+    "Customer ID",
+    "Country"
+  ],
+  "missing_values": {
+    "Invoice": 0,
+    "StockCode": 0,
+    "Description": 4382,
+    "Quantity": 0,
+    "InvoiceDate": 0,
+    "Price": 0,
+    "Customer ID": 243007,
+    "Country": 0
+  },
+  "exact_duplicate_rows": 34335,
+  "duplicate_counting_note": "Exact duplicates counted after combining both sheets.",
+  "cancellation_invoice_rows": 19494,
+  "negative_quantity_rows": 22950,
+  "zero_price_rows": 6202,
+  "quantity_over_1000_rows": 352,
+  "price_over_1000_rows": 245,
+  "negative_price_rows": 5,
+  "quantity_min": "-80995",
+  "quantity_max": "80995",
+  "price_min": -53594.36,
+  "price_max": 38970.0,
+  "unique_country_count": 43,
+  "sheet_details": [
+    {
+      "sheet": "Year 2009-2010",
+      "data_rows": 525461,
+      "duplicate_rows": 6865,
+      "missing_values": {
+        "Invoice": 0,
+        "StockCode": 0,
+        "Description": 2928,
+        "Quantity": 0,
+        "InvoiceDate": 0,
+        "Price": 0,
+        "Customer ID": 107927,
+        "Country": 0
+      },
+      "cancellation_invoice_rows": 10206,
+      "negative_quantity_rows": 12326,
+      "zero_price_rows": 3687,
+      "quantity_over_1000_rows": 236,
+      "price_over_1000_rows": 125,
+      "negative_price_rows": 3
+    },
+    {
+      "sheet": "Year 2010-2011",
+      "data_rows": 541910,
+      "duplicate_rows": 5268,
+      "missing_values": {
+        "Invoice": 0,
+        "StockCode": 0,
+        "Description": 1454,
+        "Quantity": 0,
+        "InvoiceDate": 0,
+        "Price": 0,
+        "Customer ID": 135080,
+        "Country": 0
+      },
+      "cancellation_invoice_rows": 9288,
+      "negative_quantity_rows": 10624,
+      "zero_price_rows": 2515,
+      "quantity_over_1000_rows": 116,
+      "price_over_1000_rows": 120,
+      "negative_price_rows": 2
+    }
+  ],
+  "cleaning_decisions": "No rows deleted. Flag unusual observations for investigation before deciding on preprocessing."
+}
