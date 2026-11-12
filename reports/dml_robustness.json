@@ -1,0 +1,46 @@
+{
+  "method": "EconML LinearDML",
+  "sample_invoices": 500,
+  "cross_fitting_folds": 3,
+  "seeds": [
+    21,
+    42,
+    84
+  ],
+  "results": [
+    {
+      "seed": 21,
+      "rows": 13051,
+      "invoices": 500,
+      "estimate": -0.7382409378058258,
+      "standard_error": 0.0126605636225814,
+      "confidence_interval": [
+        -0.7630551865300633,
+        -0.7134266890815882
+      ]
+    },
+    {
+      "seed": 42,
+      "rows": 10988,
+      "invoices": 500,
+      "estimate": -0.6411571024215347,
+      "standard_error": 0.012743053231307115,
+      "confidence_interval": [
+        -0.6661330278079733,
+        -0.616181177035096
+      ]
+    },
+    {
+      "seed": 84,
+      "rows": 12319,
+      "invoices": 500,
+      "estimate": -0.6938649553519965,
+      "standard_error": 0.012981357707108098,
+      "confidence_interval": [
+        -0.7193079489283599,
+        -0.6684219617756332
+      ]
+    }
+  ],
+  "interpretation": "Preliminary sample-stability analysis. Observational estimates do not establish causality."
+}

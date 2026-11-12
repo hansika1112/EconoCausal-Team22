@@ -1,0 +1,17 @@
+{
+  "rows": 37296,
+  "invoices": 1500,
+  "products": 3630,
+  "countries": 19,
+  "months": 25,
+  "treatment": "log_price",
+  "outcome": "log_quantity",
+  "confounders": [
+    "StockCode",
+    "Country",
+    "month"
+  ],
+  "estimator": "EconML LinearDML",
+  "cross_fitting": "Invoice-group-aware GroupKFold",
+  "interpretation": "Observational DML estimate. Causal interpretation requires defensible identification assumptions."
+}

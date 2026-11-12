@@ -9,6 +9,7 @@ def validate_dml_features(
     treatment: str,
     outcome: str,
     confounders: Sequence[str] = (),
+    require_positive: bool = True,
 ) -> dict:
     """Validate basic data readiness before fitting a DML model."""
 
@@ -63,9 +64,12 @@ def validate_dml_features(
         for column in required
     }
 
+    if not isinstance(require_positive, bool):
+        raise TypeError("require_positive must be a boolean")
+
     invalid_counts = {
-        treatment: int((selected[treatment] <= 0).sum()),
-        outcome: int((selected[outcome] <= 0).sum()),
+        treatment: int((selected[treatment] <= 0).sum()) if require_positive else 0,
+        outcome: int((selected[outcome] <= 0).sum()) if require_positive else 0,
     }
 
     ready = (

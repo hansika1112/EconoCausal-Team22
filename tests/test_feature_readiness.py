@@ -115,3 +115,41 @@ def test_infinite_confounder_is_flagged():
     )
     assert result["ready"] is False
     assert result["non_finite_counts"]["Confounder"] == 1
+
+
+def test_treatment_cannot_be_a_confounder():
+    data = pd.DataFrame({
+        "Price": [10.0, 12.0],
+        "Quantity": [5, 3],
+        "Country": ["UK", "France"],
+    })
+    with pytest.raises(ValueError, match="Confounders must differ"):
+        validate_dml_features(data, "Price", "Quantity", ["Price"])
+
+
+def test_outcome_cannot_be_a_confounder():
+    data = pd.DataFrame({
+        "Price": [10.0, 12.0],
+        "Quantity": [5, 3],
+        "Country": ["UK", "France"],
+    })
+    with pytest.raises(ValueError, match="Confounders must differ"):
+        validate_dml_features(data, "Price", "Quantity", ["Quantity"])
+
+
+def test_negative_log_values_are_valid_when_positive_check_disabled():
+    data = pd.DataFrame({
+        "log_price": [-1.2, 0.0, 1.4],
+        "log_quantity": [-0.5, 0.0, 2.1],
+    })
+
+    result = validate_dml_features(
+        data,
+        treatment="log_price",
+        outcome="log_quantity",
+        require_positive=False,
+    )
+
+    assert result["ready"] is True
+    assert result["invalid_nonpositive_counts"]["log_price"] == 0
+    assert result["invalid_nonpositive_counts"]["log_quantity"] == 0
